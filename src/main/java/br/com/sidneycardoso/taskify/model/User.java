@@ -13,7 +13,6 @@ import lombok.ToString;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
@@ -40,8 +39,4 @@ public class User {
     @Column(name = "user_password", nullable = false)
     private String userPassword;
 
-    public void setPassword() {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.userPassword = passwordEncoder.encode(userPassword);
-    }
 }
