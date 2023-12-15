@@ -1,65 +1,33 @@
 package br.com.sidneycardoso.taskify.dto;
 
+import org.springframework.format.annotation.NumberFormat;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 import br.com.sidneycardoso.taskify.model.Status;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskForm {
-    private Long idTask;
+
+    @NotNull
+    @Size(min = 5, max = 50)
     private String taskName;
+
+    @NotNull
     private String description;
+
+    @NotNull
+    @NumberFormat(pattern = "00/00/0000")
     private LocalDate conclusionDate;
+
+    @NotNull
     private Status status;
-
-    public TaskForm() {
-    }
-
-    public TaskForm(Long idTask, String taskName, String description, LocalDate conclusionDate, Status status) {
-        this.idTask = idTask;
-        this.taskName = taskName;
-        this.description = description;
-        this.conclusionDate = conclusionDate;
-        this.status = status;
-    }
-
-    public Long getIdTask() {
-        return idTask;
-    }
-
-    public void setIdTask(Long idTask) {
-        this.idTask = idTask;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getConclusionDate() {
-        return conclusionDate;
-    }
-
-    public void setConclusionDate(LocalDate conclusionDate) {
-        this.conclusionDate = conclusionDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
 }

@@ -10,8 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
@@ -33,6 +33,7 @@ public class User {
 
     @Email(message = "Please provide a valid email address")
     @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
+    @NotBlank(message = "Email cannot be blank")
     @Column(name = "user_email", nullable = false)
     private String userEmail;
 
