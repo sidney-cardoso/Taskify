@@ -5,19 +5,21 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ServerErrorException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.ConstraintViolationException;
-
-import br.com.sidneycardoso.taskify.model.Status;
-import br.com.sidneycardoso.taskify.model.Task;
-import br.com.sidneycardoso.taskify.repository.TaskRepository;
-import br.com.sidneycardoso.taskify.response.RegistrationResponse;
-import br.com.sidneycardoso.taskify.response.TaskResponse;
+import br.com.sidneycardoso.taskify.core.model.Status;
+import br.com.sidneycardoso.taskify.core.model.Task;
+import br.com.sidneycardoso.taskify.core.repository.TaskRepository;
+import br.com.sidneycardoso.taskify.core.response.DeleteResponse;
+import br.com.sidneycardoso.taskify.core.response.RegistrationResponse;
+import br.com.sidneycardoso.taskify.core.response.TaskResponse;
 
 @Controller
 @RequestMapping("/tasks")
@@ -40,14 +42,25 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/tasks")
-    public ResponseEntity<TaskResponse> listar() {
+    @GetMapping("/list")
+    public ResponseEntity<TaskResponse> list() {
         try {
             Iterable<Task> tasks = repository.findAll();
             return ResponseEntity.ok(new TaskResponse(tasks));
         } catch (ServerErrorException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new TaskResponse("Ocorreu um erro ao obter a lista de tarefass."));
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<DeleteResponse> delete(@PathVariable Long id) {
+        try {
+            repository.deleteById(id);
+            return ResponseEntity.ok(new DeleteResponse("Tarefa excluída com sucesso!"));
+        } catch (ServerErrorException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new DeleteResponse("Ocorreu um erro ao excluir a tarefa!"));
         }
     }
 

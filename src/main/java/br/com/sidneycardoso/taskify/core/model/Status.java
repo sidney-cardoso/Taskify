@@ -1,4 +1,4 @@
-package br.com.sidneycardoso.taskify.model;
+package br.com.sidneycardoso.taskify.core.model;
 
 public enum Status {
     TO_DO("A fazer"),

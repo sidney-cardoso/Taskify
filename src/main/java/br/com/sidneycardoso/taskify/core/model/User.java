@@ -1,4 +1,4 @@
-package br.com.sidneycardoso.taskify.model;
+package br.com.sidneycardoso.taskify.core.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

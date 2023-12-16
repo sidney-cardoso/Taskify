@@ -1,7 +1,7 @@
-package br.com.sidneycardoso.taskify.response;
+package br.com.sidneycardoso.taskify.core.response;
 
-import br.com.sidneycardoso.taskify.model.Task;
-import br.com.sidneycardoso.taskify.model.User;
+import br.com.sidneycardoso.taskify.core.model.Task;
+import br.com.sidneycardoso.taskify.core.model.User;
 
 public class RegistrationResponse {
     private User user;

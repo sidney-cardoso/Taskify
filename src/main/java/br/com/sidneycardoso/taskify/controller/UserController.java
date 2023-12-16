@@ -12,10 +12,9 @@ import org.springframework.web.client.HttpServerErrorException.InternalServerErr
 import org.springframework.web.server.ServerErrorException;
 
 import jakarta.validation.ConstraintViolationException;
-
-import br.com.sidneycardoso.taskify.model.User;
-import br.com.sidneycardoso.taskify.repository.UserRepository;
-import br.com.sidneycardoso.taskify.response.*;
+import br.com.sidneycardoso.taskify.core.model.User;
+import br.com.sidneycardoso.taskify.core.repository.UserRepository;
+import br.com.sidneycardoso.taskify.core.response.*;
 
 @Controller
 @RequestMapping("/users")

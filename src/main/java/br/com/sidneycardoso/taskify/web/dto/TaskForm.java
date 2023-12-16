@@ -1,6 +1,8 @@
-package br.com.sidneycardoso.taskify.dto;
+package br.com.sidneycardoso.taskify.web.dto;
 
 import org.springframework.format.annotation.NumberFormat;
+
+import br.com.sidneycardoso.taskify.core.model.Status;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -8,8 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-
-import br.com.sidneycardoso.taskify.model.Status;
 
 @Data
 @NoArgsConstructor

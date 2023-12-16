@@ -1,4 +1,4 @@
-package br.com.sidneycardoso.taskify.model;
+package br.com.sidneycardoso.taskify.core.model;
 
 import java.time.LocalDate;
 

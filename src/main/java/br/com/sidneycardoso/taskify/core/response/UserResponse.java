@@ -1,6 +1,6 @@
-package br.com.sidneycardoso.taskify.response;
+package br.com.sidneycardoso.taskify.core.response;
 
-import br.com.sidneycardoso.taskify.model.User;
+import br.com.sidneycardoso.taskify.core.model.User;
 
 public class UserResponse {
     private Iterable<User> users;

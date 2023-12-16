@@ -1,4 +1,4 @@
-package br.com.sidneycardoso.taskify.response;
+package br.com.sidneycardoso.taskify.core.response;
 
 public class DeleteResponse {
     private String message;
