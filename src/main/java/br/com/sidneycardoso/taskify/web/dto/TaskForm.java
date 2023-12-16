@@ -1,15 +1,13 @@
 package br.com.sidneycardoso.taskify.web.dto;
 
-import org.springframework.format.annotation.NumberFormat;
-
-import br.com.sidneycardoso.taskify.core.model.Status;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import br.com.sidneycardoso.taskify.core.model.Status;
 
 @Data
 @NoArgsConstructor
@@ -24,8 +22,8 @@ public class TaskForm {
     private String description;
 
     @NotNull
-    @NumberFormat(pattern = "00/00/0000")
-    private LocalDate conclusionDate;
+    @NotBlank(message = "Date must not be blank")
+    private String conclusionDate;
 
     @NotNull
     private Status status;

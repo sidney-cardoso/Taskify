@@ -1,7 +1,5 @@
 package br.com.sidneycardoso.taskify.core.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,7 +40,7 @@ public class Task {
 
     @Column(name = "conclusion_date")
     @NotBlank(message = "A date is required")
-    private LocalDate conclusionDate;
+    private String conclusionDate;
 
     @Column(nullable = false, length = 14)
     @Enumerated(EnumType.STRING)
