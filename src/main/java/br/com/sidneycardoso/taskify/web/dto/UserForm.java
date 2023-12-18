@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -15,14 +15,14 @@ public class UserForm {
 
     @NotNull
     @Size(min = 3, max = 255)
-    private String userName;
+    private String name;
 
-    @Email
     @NotNull
     @Size(min = 3, max = 255)
-    private String userEmail;
+    @Email
+    private String email;
 
     @NotNull
     @NotEmpty
-    private String userPassword;
+    private String password;
 }

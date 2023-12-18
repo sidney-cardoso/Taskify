@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, _)}">
+  <head>
+    <title>Lista de usuários</title>
+  </head>
+  <body>
+    <main>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Lista de usuários</div>
+              <div class="card-tools">
+                <a
+                  th:href="@{/admin/users/register}"
+                  class="btn btn-sm btn-success"
+                  >Novo usuário</a
+                >
+              </div>
+            </div>
+            <div class="card-body">
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nome:</th>
+                    <th>E-mail:</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td>
+                      <a
+                        class="btn btn-sm btn-warning"
+                        th:href="@{/admin/users/{id}/edit (id=${user.id})} "
+                        >Editar</a
+                      >
+                      <a
+                        class="btn btn-sm btn-danger"
+                        th:href="@{/admin/users/{id}/delete (id=${user.id})}"
+                        onclick="return confirm('Deseja excluir o usuário?')"
+                        >Excluir</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

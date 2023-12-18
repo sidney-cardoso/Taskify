@@ -10,9 +10,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -25,19 +22,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ToString.Include
     @EqualsAndHashCode.Include
-    @Column(name = "id_user")
-    private Long idUser;
+    private Long id;
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @Column(nullable = false)
+    private String name;
 
-    @Email(message = "Please provide a valid email address")
-    @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
-    @NotBlank(message = "Email cannot be blank")
-    @Column(name = "user_email", nullable = false)
-    private String userEmail;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @Column(name = "user_password", nullable = false)
-    private String userPassword;
-
+    @Column(nullable = false)
+    private String password;
 }

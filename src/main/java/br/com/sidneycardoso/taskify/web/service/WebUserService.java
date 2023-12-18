@@ -45,7 +45,7 @@ public class WebUserService {
         User userFound = findUserById(id);
 
         User model = mapper.toModel(form);
-        model.setIdUser(userFound.getIdUser());
+        model.setId(userFound.getId());
 
         return repository.save(model);
     }

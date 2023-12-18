@@ -1,75 +1,85 @@
 package br.com.sidneycardoso.taskify.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
-import org.springframework.web.server.ServerErrorException;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
-import br.com.sidneycardoso.taskify.core.model.User;
-import br.com.sidneycardoso.taskify.core.response.*;
+import br.com.sidneycardoso.taskify.web.dto.FlashMessage;
 import br.com.sidneycardoso.taskify.web.dto.UserForm;
 import br.com.sidneycardoso.taskify.web.service.WebUserService;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UserController {
     @Autowired
     private WebUserService service;
 
+    @GetMapping
+    public ModelAndView list() {
+        ModelAndView modelAndView = new ModelAndView("admin/users/list");
+        modelAndView.addObject("users", service.listAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/register")
+    public ModelAndView register() {
+        ModelAndView modelAndView = new ModelAndView("admin/users/register-form");
+        modelAndView.addObject("registerForm", new UserForm());
+        return modelAndView;
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResponse> register(@RequestBody UserForm user) {
-        try {
-            User savedUser = service.create(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new RegistrationResponse(savedUser));
-        } catch (DataIntegrityViolationException | ConstraintViolationException err) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new RegistrationResponse("Erro ao cadastrar o usuário. Verifique os dados fornecidos."));
-        } catch (Exception err) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RegistrationResponse("Ocorreu um erro interno ao processar a solicitação."));
+    public ModelAndView register(@Valid @ModelAttribute("registerForm") UserForm registerForm,
+            BindingResult result, RedirectAttributes attributes) {
+
+        if (result.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("admin/users/register-form");
+            modelAndView.addObject("form", registerForm);
+            return modelAndView;
         }
+
+        service.create(registerForm);
+
+        attributes.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!"));
+
+        return new ModelAndView("redirect:/admin/users");
     }
 
-    @GetMapping("/listar")
-    public ResponseEntity<UserResponse> list() {
-        try {
-            Iterable<User> users = service.listAll();
-            return ResponseEntity.ok(new UserResponse(users));
-        } catch (ServerErrorException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new UserResponse("Ocorreu um erro ao obter a lista de usuários."));
-        }
+    @GetMapping("/{id}/edit")
+    public ModelAndView edit(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("admin/users/register-form");
+
+        modelAndView.addObject("registerForm", service.findUserById(id));
+
+        return modelAndView;
     }
 
-    @PutMapping("/{id}/editar")
-    public ResponseEntity<RegistrationResponse> editar(@PathVariable Long id,
-            @Valid UserForm form) {
-        try {
-            service.edit(form, id);
-            return ResponseEntity.ok(new RegistrationResponse("Usuário atualizado com sucesso!"));
-        } catch (DataIntegrityViolationException | ConstraintViolationException err) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new RegistrationResponse("Erro ao atualizar o usuário. Verifique os dados fornecidos."));
-        } catch (ServerErrorException err) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RegistrationResponse("Ocorreu um erro ao atualizar o usuário!"));
+    @PostMapping("/{id}/edit")
+    public ModelAndView editar(@PathVariable Long id, @Valid @ModelAttribute("registerForm") UserForm form,
+            BindingResult result, RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("admin/users/register-form");
+            modelAndView.addObject("form", form); // Adicione o objeto form novamente
+            return modelAndView;
         }
+
+        service.edit(form, id);
+
+        attributes.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
+
+        return new ModelAndView("redirect:/admin/users");
     }
 
-    @DeleteMapping("/{id}/delete")
-    public ResponseEntity<DeleteResponse> delete(@PathVariable("id") Long id) {
-        try {
-            service.findUserById(id);
-            return ResponseEntity.ok(new DeleteResponse("Usuário excluído com sucesso", id));
-        } catch (InternalServerError e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new DeleteResponse("Ocorreu um erro interno ao processar a exclusão do usuário"));
-        }
+    @GetMapping("/{id}/delete")
+    public RedirectView excluir(@PathVariable Long id, RedirectAttributes attributes) {
+        service.deleteUserById(id);
+        attributes.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário excluido com sucesso!"));
+
+        return new RedirectView("/admin/users");
     }
 }
