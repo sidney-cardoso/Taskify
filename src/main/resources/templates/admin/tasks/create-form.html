@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html th:replace="~{adminlte3 :: layout (~{::title}, ~{:: main}, _, _)}">
+  <head>
+    <title>Criar tarefas</title>
+  </head>
+  <body>
+    <main>
+      <div class="row">
+        <div class="col">
+          <div class="card card-primary">
+            <div class="card-header">
+              <div class="card-title">Criar tarefas</div>
+            </div>
+            <div class="card-body">
+              <form method="post" th:object="${createForm}">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="name">Nome:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        th:field="*{name}"
+                      />
+                      <ul>
+                        <li
+                          class="text-danger"
+                          th:each="error : ${#fields.errors('name')}"
+                          th:text="${error}"
+                        ></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="description">Descrição:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        th:field="*{description}"
+                      />
+                      <ul>
+                        <li
+                          class="text-danger"
+                          th:each="error : ${#fields.errors('description')}"
+                          th:text="${error}"
+                        ></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="conclusion">Data de conclusão:</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        th:field="*{conclusion}"
+                      />
+                      <ul>
+                        <li
+                          class="text-danger"
+                          th:each="error : ${#fields.errors('conclusion')}"
+                          th:text="${error}"
+                        ></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label for="status">Status da tarefa</label>
+                      <select class="form-control" th:field="*{status}">
+                        <option
+                          th:each="status : ${status}"
+                          th:text="${status.name}"
+                          th:value="${status}"
+                        ></option>
+                      </select>
+                      <ul>
+                        <li
+                          class="text-danger"
+                          th:each="error : ${#fields.errors('status')}"
+                          th:text="${error}"
+                        ></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-success" type="submit">Salvar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

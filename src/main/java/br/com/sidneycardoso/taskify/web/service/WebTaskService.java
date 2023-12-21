@@ -46,7 +46,7 @@ public class WebTaskService {
         Task taskFound = findTaskById(id);
 
         Task model = mapper.toModel(form);
-        model.setIdTask(taskFound.getIdTask());
+        model.setId(taskFound.getId());
 
         return repository.save(model);
     }

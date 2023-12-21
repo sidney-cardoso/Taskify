@@ -5,13 +5,13 @@ public enum Status {
     DOING("Fazendo"),
     DONE("Feito");
 
-    private String description;
+    private String name;
 
-    private Status(String description) {
-        this.description = description;
+    private Status(String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 }

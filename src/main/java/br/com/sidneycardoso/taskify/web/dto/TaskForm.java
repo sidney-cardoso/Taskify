@@ -16,16 +16,15 @@ public class TaskForm {
 
     @NotNull
     @Size(min = 5, max = 50)
-    private String taskName;
+    private String name;
 
     @NotNull
     private String description;
 
     @NotNull
     @NotBlank(message = "Date must not be blank")
-    private String conclusionDate;
+    private String conclusion;
 
     @NotNull
     private Status status;
-
 }
